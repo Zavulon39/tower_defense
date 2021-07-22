@@ -24,6 +24,8 @@ class TowerImage(Enum):
     INFERNO1 = BASE_PATH + 'inferno1.png'
     FIRE2 = BASE_PATH + 'fire2.png'
     ICE2 = BASE_PATH + 'ice2.png'
+    FIRE3 = BASE_PATH + 'fire3.png'
+    ICE3 = BASE_PATH + 'ice3.png'
 
 
 class Tower(ImageSprite):
@@ -100,6 +102,17 @@ class Tower(ImageSprite):
                 self.delay = 25
                 self.kill_num = 4
                 self.image = pygame.image.load(TowerImage.ICE2.value)
+                self.width, self.height = self.image.get_size()
+        elif self.level == 3:
+            if self.type == TowerType.FIRE.value:
+                self.damage = .1
+                self.image = pygame.image.load(TowerImage.FIRE3.value)
+                self.width, self.height = self.image.get_size()
+            if self.type == TowerType.ICE.value:
+                self.damage = .7
+                self.delay = 20
+                self.kill_num = 5
+                self.image = pygame.image.load(TowerImage.ICE3.value)
                 self.width, self.height = self.image.get_size()
 
     def __hash__(self):

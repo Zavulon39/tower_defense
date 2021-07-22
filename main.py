@@ -23,7 +23,7 @@ circle = ImageSprite(0, 0, 200, 200, 'assets/circle.png')
 btn_start_wave = ImageSprite(W - 210, 10, 200, 67, 'assets/button.png')
 collision_circle = pygame.Rect(0, 0, 100, 100)
 wave = 0
-money = 200
+money = 100
 health = 100
 draw_circle = False
 draw_raycast = False
@@ -58,7 +58,7 @@ while True:
                     run_wave()
             elif e.button == 2:
                 for i, t in enumerate(towers):
-                    if t.collidepoint(mx, my) and money - t.cost >= 0 and t.has_build:
+                    if t.collidepoint(mx, my) and money - t.cost >= 0 and t.has_build and t.level < 3:
                         money -= t.cost
                         t.update_level()
                         break

@@ -6,6 +6,7 @@ game mechanics
 Todo
 * add more towers and upgrades for them
 * add more types of enemies
+* upgrade spawn  mechanic
 * maybe add multiplayer
 
 <br />
