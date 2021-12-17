@@ -8,6 +8,3 @@ Todo
 * add more types of enemies
 * upgrade spawn  mechanic
 * maybe add multiplayer
-
-<br />
-<small>Unfortunately, it is not possible to add to resources due to rights policy</small>
