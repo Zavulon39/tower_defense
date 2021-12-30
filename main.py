@@ -2,7 +2,6 @@ from typing import List
 import pygame
 from src.bg_shape import BgShape
 from src.enemies.enemy import EnemyManager, Enemy
-from src.tools.console_color import RainbowPrint, ConsoleColor
 from src.tools.image_sprite import ImageSprite
 from src.tools.services import get_built_towers, draw_text
 from src.tools.timer import Timer
@@ -37,6 +36,10 @@ has_collision = False
 towers: List[Tower] = []
 enemies: List[Enemy] = []
 
+pygame.mixer.music.load('assets/bg_music.mp3')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.35)
+
 
 def run_wave():
     global wave
@@ -53,6 +56,8 @@ while True:
     mx, my = pygame.mouse.get_pos()
 
     if health <= 0:
+        pygame.mixer.music.pause()
+
         pygame.time.delay(30)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
