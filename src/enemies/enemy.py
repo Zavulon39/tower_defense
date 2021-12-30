@@ -1,5 +1,4 @@
 from enum import Enum
-
 import pygame.image
 from pygame import Surface
 from src.tools.image_sprite import ImageSprite

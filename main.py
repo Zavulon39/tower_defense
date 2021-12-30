@@ -17,6 +17,11 @@ pygame.display.set_caption('Tower Defence')
 pygame.mouse.set_visible(False)
 
 bg = pygame.image.load('assets/bg.png')
+menu = pygame.image.load('assets/menu.jpg')
+game_over = pygame.sprite.Sprite()
+game_over.image = pygame.image.load('assets/gameover.png')
+game_over.rect = game_over.image.get_rect()
+game_over.rect.x = -W
 castle = ImageSprite(940, 230, 150, 135, 'assets/castle.png')
 cursor = ImageSprite(0, 0, 30, 33, 'assets/cursor.png')
 circle = ImageSprite(0, 0, 200, 200, 'assets/circle.png')
@@ -45,9 +50,39 @@ def increase_money(amount: int):
 
 
 while True:
+    mx, my = pygame.mouse.get_pos()
+
+    if health <= 0:
+        pygame.time.delay(30)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+
+        win.fill((163, 121, 79))
+        win.blit(bg, (0, 0))
+        win.blit(menu, (430, 5))
+        castle.draw(win)
+        pygame.draw.rect(win, (33, 36, 37), (castle.x, castle.y - 15, castle.width, 10))
+        pygame.draw.rect(win, (255, 0, 46),
+                         (castle.x, castle.y - 15, (health / 100) * castle.width, 10))
+
+        for enemy in enemies:
+            enemy.draw(win)
+
+        for tower in towers:
+            tower.draw(win, mx, my, draw_raycast)
+
+        win.blit(game_over.image, game_over.rect)
+
+        if game_over.rect.x != 0:
+            game_over.rect.x += 50
+
+        pygame.display.flip()
+
+        continue
+
     pygame.time.delay(15)
     Timer.tick()
-    mx, my = pygame.mouse.get_pos()
 
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -105,6 +140,7 @@ while True:
 
     win.fill((163, 121, 79))
     win.blit(bg, (0, 0))
+    win.blit(menu, (430, 5))
     btn_start_wave.draw(win)
     castle.draw(win)
     pygame.draw.rect(win, (33, 36, 37), (castle.x, castle.y - 15, castle.width, 10))
@@ -145,14 +181,7 @@ while True:
         draw_text(win, 0, f'Wave: {wave}')
         draw_text(win, 1, f'Money: {money}')
 
-        cursor.draw(win)
-
-    if health <= 0:
-        pygame.quit()
-        RainbowPrint.print(ConsoleColor.FAIL + ConsoleColor.BOLD, 'Game Over!')
-        RainbowPrint.print(ConsoleColor.WARNING, f'Wave was: {wave}')
-        RainbowPrint.print(ConsoleColor.BLUE, f'Your money: {money}')
-        input()
-        exit()
+        if pygame.mouse.get_focused():
+            cursor.draw(win)
 
     pygame.display.update()

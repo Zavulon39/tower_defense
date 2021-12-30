@@ -19,9 +19,7 @@ class TowerType(Enum):
 
 class TowerImage(Enum):
     FIRE1 = BASE_PATH + 'fire1.png'
-    FOREST1 = BASE_PATH + 'forest1.png'
     ICE1 = BASE_PATH + 'ice1.png'
-    INFERNO1 = BASE_PATH + 'inferno1.png'
     FIRE2 = BASE_PATH + 'fire2.png'
     ICE2 = BASE_PATH + 'ice2.png'
     FIRE3 = BASE_PATH + 'fire3.png'
