@@ -17,6 +17,10 @@ pygame.mouse.set_visible(False)
 
 bg = pygame.image.load('assets/bg.png')
 menu = pygame.image.load('assets/menu.jpg')
+click_sound = pygame.mixer.Sound("assets/click.mp3")
+build_sound = pygame.mixer.Sound("assets/build.mp3")
+start_wave_sound = pygame.mixer.Sound("assets/start_wave.mp3")
+game_over_sound = pygame.mixer.Sound("assets/gameover.mp3")
 game_over = pygame.sprite.Sprite()
 game_over.image = pygame.image.load('assets/gameover.png')
 game_over.rect = game_over.image.get_rect()
@@ -43,6 +47,7 @@ pygame.mixer.music.set_volume(0.35)
 
 def run_wave():
     global wave
+    start_wave_sound.play()
     wave += 1
     enemies.extend(EnemyManager.get_enemies(wave))
 
@@ -62,10 +67,12 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                click_sound.play()
 
         win.fill((163, 121, 79))
         win.blit(bg, (0, 0))
-        win.blit(menu, (430, 5))
+        win.blit(menu, (460, 5))
         castle.draw(win)
         pygame.draw.rect(win, (33, 36, 37), (castle.x, castle.y - 15, castle.width, 10))
         pygame.draw.rect(win, (255, 0, 46),
@@ -94,7 +101,7 @@ while True:
             exit()
         elif e.type == pygame.MOUSEBUTTONDOWN:
             if e.button == 1:
-                if btn_start_wave.collidepoint(mx, my):  # and not enemies
+                if btn_start_wave.collidepoint(mx, my) and not enemies:
                     run_wave()
             elif e.button == 2:
                 for i, t in enumerate(towers):
@@ -113,6 +120,9 @@ while True:
                 money -= towers[-1].cost
                 draw_circle = False
                 Timer.add(towers[-1])
+                build_sound.play()
+
+            click_sound.play()
 
         elif e.type == pygame.KEYDOWN:
             if e.unicode == '1':
@@ -133,7 +143,7 @@ while True:
                     towers.pop(-1)
             elif e.unicode == '\t':
                 draw_raycast = True
-            elif e.unicode == '\r':
+            elif e.unicode == '\r' and not enemies:
                 run_wave()
         elif e.type == pygame.KEYUP:
             if e.unicode == '\t':
@@ -143,9 +153,12 @@ while True:
         enemies.pop(i)
         health -= 10
 
+        if health == 0:
+            game_over_sound.play()
+
     win.fill((163, 121, 79))
     win.blit(bg, (0, 0))
-    win.blit(menu, (430, 5))
+    win.blit(menu, (460, 5))
     btn_start_wave.draw(win)
     castle.draw(win)
     pygame.draw.rect(win, (33, 36, 37), (castle.x, castle.y - 15, castle.width, 10))

@@ -37,7 +37,7 @@ class Tower(ImageSprite):
         self.idx = idx
 
         if self.type == TowerType.FIRE.value:
-            self.damage = .05
+            self.damage = .035
             self.cost = 50
             self.delay = 0
         if self.type == TowerType.ICE.value:
@@ -92,7 +92,7 @@ class Tower(ImageSprite):
 
         if self.level == 2:
             if self.type == TowerType.FIRE.value:
-                self.damage = .07
+                self.damage = .05
                 self.image = pygame.image.load(TowerImage.FIRE2.value)
                 self.width, self.height = self.image.get_size()
             if self.type == TowerType.ICE.value:
@@ -103,7 +103,7 @@ class Tower(ImageSprite):
                 self.width, self.height = self.image.get_size()
         elif self.level == 3:
             if self.type == TowerType.FIRE.value:
-                self.damage = .1
+                self.damage = .065
                 self.image = pygame.image.load(TowerImage.FIRE3.value)
                 self.width, self.height = self.image.get_size()
             if self.type == TowerType.ICE.value:
