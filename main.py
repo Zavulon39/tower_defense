@@ -1,11 +1,15 @@
 from typing import List
 import pygame
+from datetime import datetime
 from src.bg_shape import BgShape
 from src.enemies.enemy import EnemyManager, Enemy
 from src.tools.image_sprite import ImageSprite
 from src.tools.services import get_built_towers, draw_text
 from src.tools.timer import Timer
 from src.towers.tower import Tower, TowerType, TowerImage
+
+with open('logger.txt', 'a', encoding='utf8') as file:
+    file.write(f'Вход в игру {datetime.now()}')
 
 pygame.init()
 
